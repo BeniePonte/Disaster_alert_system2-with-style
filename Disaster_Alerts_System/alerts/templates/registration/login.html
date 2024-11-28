@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f7f9fc;
+        color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+    .login-container {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        width: 100%;
+        max-width: 400px; /* Conteneur plus compact */
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+    }
+    h2 {
+        color: #2C3E50;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.6rem;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #2C3E50;
+        font-weight: 600;
+    }
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        outline: none;
+        transition: border-color 0.3s;
+    }
+    .form-control:focus {
+        border-color: #3498DB;
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+    }
+    .btn-primary {
+        background-color: #3498DB;
+        border: none;
+        padding: 10px 16px; /* Ajustement de la taille du bouton */
+        border-radius: 8px;
+        color: #fff;
+        font-weight: 600;
+        width: 100%; /* Pour s'adapter au conteneur */
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+    .btn-primary:hover {
+        background-color: #2980B9;
+    }
+    .alert-info {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #d1e7dd;
+        border-radius: 8px;
+        color: #0f5139;
+        border: 1px solid #badbcc;
+    }
+    .text-danger {
+        color: #e74c3c;
+        margin-top: 5px;
+    }
+    .register-link {
+        display: block;
+        margin-top: 15px;
+        text-align: center;
+        color: #3498DB;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .register-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="login-container">
+    <h2>Login</h2>
+
+    {% if messages %}
+        <div class="alert-info">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_username">Username:</label>
+            <input type="text" name="username" id="id_username" class="form-control" required>
+            {% if form.username.errors %}
+                <div class="text-danger">
+                    {% for error in form.username.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="id_password">Password:</label>
+            <input type="password" name="password" id="id_password" class="form-control" required>
+            {% if form.password.errors %}
+                <div class="text-danger">
+                    {% for error in form.password.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn-primary">Login</button>
+        </div>
+    </form>
+    
+    <p class="register-link">
+        Don't have an account? <a href="{% url 'register' %}">Register here</a>
+    </p>
+</div>
+{% endblock %}
