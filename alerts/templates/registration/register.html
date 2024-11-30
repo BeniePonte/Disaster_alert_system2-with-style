@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f7f9fc;
+        background-image: url("{% static 'images/4b5e4ea484a0b8cce607aa40de3e3433.jpg' %}");
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat; 
+        color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 16px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 30px 40px; 
+        width: 100%;
+        max-width: 400px; 
+        max-height: 600px; 
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+        overflow-y: auto; 
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .form-group i {
+        font-size: 1.2rem;
+        color: #839192;
+        margin-right: 10px; /* Décalage entre l'icône et le champ */
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 20px;
+        border: 1px solid #ddd;
+        border-radius: 50px;
+        font-size: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        background-color: #f9f9f9;
+    }
+
+    .form-control:focus {
+        border-color: #839192;
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
+    }
+
+    .btn-primary {
+        background-color: #839192;
+        border: none;
+        padding: 14px 20px;
+        border-radius: 50px; 
+        color: #fff;
+        font-weight: 600;
+        width: 100%;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #839192;
+    }
+
+    .alert-info {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #d1e7dd;
+        border-radius: 8px;
+        color: #0f5139;
+        border: 1px solid #badbcc;
+    }
+
+    .text-danger {
+        color: #e74c3c;
+        margin-top: 5px;
+    }
+
+    .login-link {
+        display: block;
+        margin-top: 15px;
+        text-align: center;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .login-link a {
+        color: #6f7377;
+        text-decoration: underline;
+    }
+
+    .password-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Register</h2>
+
+    {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" class="p-4 shadow-sm rounded">
+
+        {% csrf_token %}
+        
+        <!-- Username -->
+        <div class="form-group">
+            <i class="fa fa-user"></i>  <!-- Icone devant le champ -->
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="text-danger">
+                    {% for error in form.username.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <i class="fa fa-envelope"></i>  <!-- Icone devant le champ -->
+            <label for="id_email">Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="text-danger">
+                    {% for error in form.email.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+            <i class="fa fa-phone"></i>  <!-- Icone devant le champ -->
+            <label for="id_phone_number">Phone Number:</label>
+            {{ form.phone_number }}
+            {% if form.phone_number.errors %}
+                <div class="text-danger">
+                    {% for error in form.phone_number.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+            <i class="fa fa-map-marker"></i>  <!-- Icone devant le champ -->
+            <label for="id_location">Location:</label>
+            {{ form.location }}
+            {% if form.location.errors %}
+                <div class="text-danger">
+                    {% for error in form.location.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <i class="fa fa-lock"></i>  <!-- Icone devant le champ -->
+            <label for="id_password1">Password:</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <div class="text-danger">
+                    {% for error in form.password1.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <i class="fa fa-lock"></i>  <!-- Icone devant le champ -->
+            <label for="id_password2">Confirm Password:</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div class="text-danger">
+                    {% for error in form.password2.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </div>
+    </form>
+
+    <p class="text-center mt-3">
+        Already have an account? <a href="{% url 'login' %}" class="text-primary">Login</a>
+    </p>
+</div>
+
+{% endblock %}
